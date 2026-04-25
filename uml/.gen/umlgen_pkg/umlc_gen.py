@@ -10,13 +10,13 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable
 
-from umlgen_cli import HelpOnErrorParser
-from umlgen_file_header import prepend_plantuml_header, read_mark_file
-from umlgen_legend import insert_legend_block
-from umlgen_matched import write_matched_section
-from umlgen_rule_match import rule_matches_type
-from umlgen_yaml import ClassConfig, ConfigError, load_diagram_config
-from frontends.registry import resolve_java_frontend
+from umlgen_pkg.umlgen_cli import HelpOnErrorParser
+from umlgen_pkg.umlgen_file_header import prepend_plantuml_header, read_mark_file
+from umlgen_pkg.umlgen_legend import insert_legend_block
+from umlgen_pkg.umlgen_matched import write_matched_section
+from umlgen_pkg.umlgen_rule_match import rule_matches_type
+from umlgen_pkg.umlgen_yaml import ClassConfig, ConfigError, load_diagram_config
+from umlgen_pkg.frontends.registry import resolve_java_frontend
 
 PACKAGE_RE = re.compile(r"^\s*package\s+([A-Za-z_$][\w$.]*)\s*;")
 TYPE_DECL_RE = re.compile(

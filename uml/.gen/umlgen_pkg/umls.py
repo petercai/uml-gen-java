@@ -18,7 +18,7 @@ from collections import OrderedDict
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from umlgen_file_header import prepend_plantuml_header, read_mark_file
+from umlgen_pkg.umlgen_file_header import prepend_plantuml_header, read_mark_file
 
 
 JAVA_TYPE_RE = re.compile(r"\b(?:[A-Za-z_$][\w$]*\.)+[A-Za-z_$][\w$]*\b")

@@ -5,8 +5,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from ir_models import FieldIR, MethodCallIR, MethodIR, SourceIndexIR, SourceRef, TypeIR
-from java_tree_sitter_support import (
+from umlgen_pkg.ir_models import FieldIR, MethodCallIR, MethodIR, SourceIndexIR, SourceRef, TypeIR
+from umlgen_pkg.java_tree_sitter_support import (
     child_field_map,
     extract_type_names_from_node,
     iter_named_descendants,

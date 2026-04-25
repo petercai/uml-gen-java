@@ -6,8 +6,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ir_models import TypeIR
-from java_tree_sitter_ir import index_java_ir, parse_java_file_to_ir
+from umlgen_pkg.ir_models import TypeIR
+from umlgen_pkg.java_tree_sitter_ir import index_java_ir, parse_java_file_to_ir
 
 
 @dataclass

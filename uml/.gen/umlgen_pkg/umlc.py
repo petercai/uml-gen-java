@@ -14,7 +14,7 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from pathlib import Path
 
-from umlgen_file_header import prepend_plantuml_header, read_mark_file
+from umlgen_pkg.umlgen_file_header import prepend_plantuml_header, read_mark_file
 
 CTRL_KEYWORDS = {
     "if",

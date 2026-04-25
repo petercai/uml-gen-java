@@ -3,10 +3,10 @@
 
 from __future__ import annotations
 
-from frontends.base import FrontendSelection
+from umlgen_pkg.frontends.base import FrontendSelection
 
 try:
-    from java_tree_sitter_frontend import (
+    from umlgen_pkg.java_tree_sitter_frontend import (
         index_source_tree as tree_sitter_sequence_indexer,
         index_workspace_types as tree_sitter_class_indexer,
     )

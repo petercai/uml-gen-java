@@ -8,20 +8,20 @@ from dataclasses import dataclass
 from pathlib import Path
 import re
 
-from java_sequence_index import MethodDef, SequenceIndex, index_source_tree
-from umlgen_cli import HelpOnErrorParser
-from umlgen_file_header import prepend_plantuml_header, read_mark_file
-from umlgen_legend import insert_legend_block
-from umlgen_matched import write_matched_section
-from umlgen_rule_match import looks_like_regex_rule, rule_matches_type
-from umlgen_yaml import ConfigError, SequenceConfig, load_diagram_config
-from umls_hierarchy import (
+from umlgen_pkg.java_sequence_index import MethodDef, SequenceIndex, index_source_tree
+from umlgen_pkg.umlgen_cli import HelpOnErrorParser
+from umlgen_pkg.umlgen_file_header import prepend_plantuml_header, read_mark_file
+from umlgen_pkg.umlgen_legend import insert_legend_block
+from umlgen_pkg.umlgen_matched import write_matched_section
+from umlgen_pkg.umlgen_rule_match import looks_like_regex_rule, rule_matches_type
+from umlgen_pkg.umlgen_yaml import ConfigError, SequenceConfig, load_diagram_config
+from umlgen_pkg.umls_hierarchy import (
     HierarchyPreference,
     build_available_type_hierarchy,
     build_defined_hierarchy_preference,
     write_available_type_hierarchy_section,
 )
-from frontends.registry import resolve_java_frontend
+from umlgen_pkg.frontends.registry import resolve_java_frontend
 
 
 def _merge_sequence_indexes(indexes: list[SequenceIndex]) -> SequenceIndex:

@@ -9,3 +9,24 @@ dependencies = [
     "tree-sitter>=0.25.2",
     "tree-sitter-java>=0.23.5",
 ]
+
+[project.scripts]
+umlc     = "umlgen_pkg.umlc:main"
+umls     = "umlgen_pkg.umls:main"
+umlc-gen = "umlgen_pkg.umlc_gen:main"
+umls-gen = "umlgen_pkg.umls_gen:main"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+# Map package roots to uml/.gen.
+[tool.setuptools.package-dir]
+"" = "uml/.gen"
+
+# Auto-discover packages (umlgen_pkg and umlgen_pkg.frontends).
+[tool.setuptools.packages.find]
+where = ["uml/.gen"]
+
+[tool.setuptools.package-data]
+umlgen_pkg = ["mark.txt"]
