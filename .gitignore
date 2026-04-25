@@ -1,1 +1,6 @@
+.idea
+.vscode/numbered-bookmarks.json
+*.pga
+*.ffs_db
+
 .vscode/numbered-bookmarks.json
