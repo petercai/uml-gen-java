@@ -1,0 +1,110 @@
+name: Build and Publish to PyPI
+
+# Trigger: on GitHub Release published event (recommended).
+# Also supports manual trigger for pipeline validation.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (build + smoke-test only, skip publish)"
+        required: false
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Job 1: Build wheel and sdist from uml/.gen
+  # ──────────────────────────────────────────────
+  build:
+    name: Build distribution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Build wheel and sdist
+        run: uv build
+
+      - name: List dist contents (evidence)
+        run: ls -lh dist/
+
+      - name: Upload dist artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+          if-no-files-found: error
+
+  # ──────────────────────────────────────────────
+  # Job 2: Smoke test — verify CLI entry points
+  # ──────────────────────────────────────────────
+  smoke-test:
+    name: Smoke test CLI entry points
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install package from wheel
+        run: |
+          WHEEL=$(ls dist/*.whl | head -1)
+          echo "Installing: $WHEEL"
+          uv pip install --system "$WHEEL"
+
+      - name: Verify CLI entry points
+        run: |
+          echo "=== umlc --help ==="
+          umlc --help
+          echo "=== umls --help ==="
+          umls --help
+          echo "=== umlc-gen --help ==="
+          umlc-gen --help
+          echo "=== umls-gen --help ==="
+          umls-gen --help
+
+  # ──────────────────────────────────────────────
+  # Job 3: Publish to PyPI via API Token (Plan B)
+  # For first-time release before Trusted Publisher is configured.
+  # Skipped on workflow_dispatch with dry_run=true
+  # ──────────────────────────────────────────────
+  publish:
+    name: Publish to PyPI (Token Mode)
+    needs: smoke-test
+    runs-on: ubuntu-latest
+    # Only publish on real release events, or manual trigger with dry_run=false
+    if: |
+      github.event_name == 'release' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false')
+    steps:
+      - name: Download dist artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Publish to PyPI
+        run: uv publish
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        # Note: UV_PUBLISH_TOKEN must be set as GitHub Repository Secret.
+        # Token must be created on PyPI with "Entire account" scope for first release.
