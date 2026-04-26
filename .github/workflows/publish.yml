@@ -55,6 +55,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Download dist artifacts
         uses: actions/download-artifact@v4
         with:
@@ -68,18 +73,19 @@ jobs:
         run: |
           WHEEL=$(ls -1 dist/*.whl | sort | tail -n 1)
           echo "Installing: $WHEEL"
-          uv pip install --system "$WHEEL"
+          uv venv .venv
+          uv pip install --python .venv/bin/python "$WHEEL"
 
       - name: Verify CLI entry points
         run: |
           echo "=== umlc --help ==="
-          umlc --help
+          .venv/bin/umlc --help
           echo "=== umls --help ==="
-          umls --help
+          .venv/bin/umls --help
           echo "=== umlc-gen --help ==="
-          umlc-gen --help
+          .venv/bin/umlc-gen --help
           echo "=== umls-gen --help ==="
-          umls-gen --help
+          .venv/bin/umls-gen --help
 
   # ──────────────────────────────────────────────
   # Job 3: Publish to PyPI via API Token (Plan B)
