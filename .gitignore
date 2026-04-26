@@ -6,3 +6,4 @@
 .vscode/numbered-bookmarks.json
 uml/.gen/uml_gen.egg-info
 uv.lock
+**/__pycache__

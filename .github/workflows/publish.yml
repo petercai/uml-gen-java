@@ -33,7 +33,9 @@ jobs:
           enable-cache: true
 
       - name: Build wheel and sdist
-        run: uv build
+        run: |
+          rm -rf dist
+          uv build
 
       - name: List dist contents (evidence)
         run: ls -lh dist/
@@ -64,7 +66,7 @@ jobs:
 
       - name: Install package from wheel
         run: |
-          WHEEL=$(ls dist/*.whl | head -1)
+          WHEEL=$(ls -1 dist/*.whl | sort | tail -n 1)
           echo "Installing: $WHEEL"
           uv pip install --system "$WHEEL"
 
