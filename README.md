@@ -1,107 +1,56 @@
-# uml-gen
+# UML Gen for Source-to-UML CLI Workflows
+
+UML Gen converts source code into PlantUML class and sequence diagrams from a command-line workflow.
+
+Teams keep architecture artifacts in sync with implementation by generating diagrams directly from code and instruction. The workflow is scriptable for local development and CI pipelines. The output is optimized for review in UMLMark tools.
 
 <p align="center">
-  <b>Generate UML diagrams directly from source code — fast, simple, developer-friendly.</b>
+  <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="Build passing">
+  <img src="https://img.shields.io/badge/python-3.12+-blue" alt="Python 3.12+">
+  <img src="https://img.shields.io/badge/license-dual--license-orange" alt="Dual license model badge">
+  <a href="https://github.com/petercai/uml-gen-java/stargazers"><img src="https://img.shields.io/github/stars/petercai/uml-gen-java?style=social" alt="GitHub stars for uml-gen-java"></a>
 </p>
 
-<p align="center">
-  Turn your code into <b>architecture diagrams</b> in seconds.
-</p>
+## Why UML Gen
 
----
+Problem:
 
-<p align="center">
-  <img src="https://img.shields.io/badge/build-passing-brightgreen">
-  <img src="https://img.shields.io/badge/python-3.12+-blue">
-  <img src="https://img.shields.io/badge/license-dual--license-orange">
-  <img src="https://img.shields.io/github/stars/petercai/uml-gen-java?style=social">
-</p>
+- Architecture diagrams become outdated when maintained manually.
+- Large codebases are hard to inspect at class and interaction level.
+- Teams need automation-friendly UML output for CI and review workflows.
 
----
+Solution:
 
-## ✨ Why uml-gen?
+- Use `umlc-gen` and `umls-gen` to run configuration-driven generation pipelines.
+- Use `umlc` and `umls` to generate class and sequence diagrams from UMLMark eclipse input.
+- Produce PlantUML output that can be reviewed, versioned, and shared.
+- Integrate generation commands into scripts and CI jobs with consistent inputs.
 
-Navigating and understanding large Java codebases is hard.
+## Key Capabilities
 
-**uml-gen** helps you:
+- Instruction-driven class generation with `umlc-gen`.
+- Instruction-driven sequence generation with `umls-gen`.
+- Command-line class diagram generation with `umlc`.
+- Command-line sequence diagram generation with `umls`.
+- PlantUML output suitable for [UMLMark](https://github.com/petercai/vscode-umlmark) preview and navigation workflows.
 
-* 🧠 Visualize architecture instantly
-* 🔍 Understand class relationships
-* 🔄 Trace method interactions (sequence diagrams)
-* ⚡ Integrate into your dev workflow (CLI / CI / IDE)
+## Supported File Types
 
----
+- Source input: Java source files (`.java`) and source roots.
+- Generation instruction: YAML (`.yaml`, `.yml`).
+- Output: PlantUML (`.puml`, `.plantuml`) and rendered SVG from [UMLMark Tool](https://github.com/petercai/vscode-umlmark).
 
-## 🚀 Features
-
-* ✅ Generate **UML Class Diagrams**
-* ✅ Generate **Sequence Diagrams**
-* ✅ Output **PlantUML** format
-* ✅ CLI-first (scriptable & automatable)
-* ✅ Works with VSCode / Intellij ecosystem
-* ✅ Fast, minimal dependencies
-
----
-
-## 📦 Installation
-
-```bash
-pip install uml-gen
-# or
-pipx install uml-gen
-```
-
-Or from source:
-
-```bash
-git clone https://github.com/petercai/uml-gen-java.git
-cd uml-gen-java
-uv pip install -e .
-```
-
----
-
-## 🧪 Quick Start
-
-- Generate class diagram:
-  ```bash
-    # fine-grained diagram generation control
-    umlc_gen.py --config <your-generation-instruction>.yaml 
-
-    # quick generation
-    umlc_gen.py --input src/main/java/com/example/MyService.java
-    # or when the class name is unique
-    umlc_gen.py --input MyService
-  ```  
-  <div align="right">
-
-  <sub><em>refer to <a href="https://github.com/petercai/Vision/blob/master/uml/umlc-CategoryController.yaml" target="_blank">instruction example</a></em></sub>
-
-  </div>
-
-- Generate sequence diagram:
-  ```bash
-  umls_gen.py --config <your-generation-instruction>.yaml
-  ```
-  <div align="right">
-
-  <sub><em>refer to <a href="https://github.com/petercai/Vision/blob/master/uml/umls-FeedRefreshTaskGiver.yaml" target="_blank">instruction example</a></em></sub>
-
-  </div>
-
----
-
-## 📊 Example
+## Example
 - PlantUML Class Diagram
-  ![umlc-CategoryController](https://www.plantuml.com/plantuml/svg/lLfTRXit47xVKn3eGri4yiQMP5j-2E8eJb2WQL8xzajW5DGkBR7PFv2K4lNd57th3NgD7gKdwN3_nDqbgLtjsa22GCkPxnlE36Uuitd91MPY7GO8_dgZEHPa6RFjF8u4YuE0i5zUaqIiniwtw2s928Dr7ossKdgq9152__w3Ff0a8IoaaG2fbH09lt3T9HMhzUB8YqCt8O8m3rCtLnhzYZTuZ-WTvJIENC48SKFCuQdKRgK4Gl3dVI9eI7y3QnzYXZQKVA7H4dq1BNHtW-QnJz0pTFlkntUOVUwqYGttG7a4reIWcf5TUG5DE44u0A482xeX5mU1vpeZHWA2EL6a9HaHIO0zSaGokgEOBLqF8aKYuHRs10Gyx2CH9yY3vuGv27tw1Akk8S17Mnm65yVelx__sYTrV-z8x8p2aHGYHejOY3X4FcN44zBzAmg-9M4YjYWauO8mxZXUW3b7MNm0z84krv1Ay0Diuyo3tT78bMdXIY-axd0tMGg0VqBuHwDx91KkJexlxz7liCjd_R76npeRl_iUDZu8_dIAbaJSWKk6XPr9sBTKp46GYXJupzpdbmik6FR46xoXa2jlYF1MXEtdVCZaNRr-ndiyRk_wDdWd9-X1_iuzyyr0g1D4-HqEgFy3B5qJdiGH9nKdlI74_tbDreIte0HPTwUGStJnX0vWF4C2VoRjSqABCZr1sFTxWXmVGvP21Nk5lSzzeU10KNuP1A_ZgEdnQ_B025_98aE-YWuKLSMSwla14T02dMcCgzX-irvmZz547i3Nb-_tyoNom4CFYppY-ZXsQm0vxtdx3RG2dAJ5vZPY1FlpU1tfwy8xQ6P1DqPeArHitGh2RWzAW0-2bOevskGmZpI1e0I8-4Omk08qih3eTGTp500vrsblewk0ax7PzYjepuSRdchlccWTTvxTBFh1vo2xWDPPRWGMwnPbrqQIOUGxwL07sc92VwqzRryNstASZhKSZMX_nCj-f03GlNkt0eHYhpuSnaSxz4aJNVMEMWCFfbH1YdRGsqjDqF69_apVyZPNCmsDL1p4tXtGz1pnLRmEYaueTy8lYoP2vQl50xoCfBxtief52RycISofw5nFMQddcW3xdU_s1709fP7_QliJ3ZlSnmxZEfKj-jLMUbthM8ZAW5vje7L_Wpe0VPpwy-ehgEtolRdDBK-htg2RrM0MZXzioqQEyVDTS2-ZIXM0dsaT6oIzx4PateUEmXZfy6PmC5-QqTULA-UZ4awUws-vrGGRAgaUw-mqSITv5Rh6NsvPC8WVTUKd8oaO6cvJSdOm5-en1wtkTewYm4l93uILnVTnMKjVFmtTBALBQqymKFhO-E16K-raZyisKKAeloVV4BQXaCQTRE2Pabj7oQzMqyEIquuAYI47jptwWHr_Ca5onlze-ATdgVrvXxdABW7DstdVS5GZCUiVYMeGPggL_TrKZK3MWz-pEJGfCJJwz2mRckQZJ-jxKVyeDC7wzS5MuECPoil1OWZlcMWWJaz2S_OaD6TJj8wUWkZy5B7i5V7WJjEAPpQnpJERdwpscm0s2nSdrDLyxyelb-spUY_O-RcqNzqUr-wW9PKlOhSwAPoLqxLkiv0IJZFzw72iRJ1Jj5ZJeDggbKXs05UqTeD_np5yvXgDNgH5q56-y1JFb5k5Rhdw0K0duMW-OhHPItkeK_-A85ULpQK0yF2F5zLHlLEPMUzVVv4EbPfFwqVDsSsJ3Q35ehB1wYDru6jQpaQRfjMFUEdKaQpcx6HKrzQ7opQ4KiJcafgGYSMq4qMW34OvpBKPbwthjUgcLCwy0RGcem0tLieOQrUAL39BgD5Enve6axIZmrIsmTCSXfLoEpVeX9JTc2PDLIGbIyqAXeJPfr0rrIHPhmHQMntREtefrR3Gh54_siLziIoPUaspGYCQTb6DDymAzKWrZAs1gElwTg65QQHu5yDjUZPdslJottlbicwrLsolWF6iguBrVBLkG4r8pRsjaDEL1fkyAH0M5LCCB2fgBjhaD1umYTUk0YOnpV__COcMCRCOs4QcJQZKq5Uk61LbRPEmIwZ0Bqdao_y0-3y=)
+  ![umlc-CategoryController](https://raw.githubusercontent.com/petercai/Vision/refs/heads/master/uml/umlc-CategoryController_Depth3.svg)
   <div align="center">
 
   <sub><em>Optimized for viewing with <a href="https://github.com/petercai/vscode-umlmark" target="_blank">vscode-umlmark</a></em></sub>
 
   </div>
 
-
   - PlantUML Source
+
     ```
     @startuml umlc-CategoryController_Depth3
     legend top center
@@ -139,10 +88,8 @@ uv pip install -e .
     @enduml
     ```
 
-
 - PlantUML Sequence Diagram
-  ![umls-FeedRefreshTaskGiver](https://www.plantuml.com/plantuml/svg/xLpTZjku5RwVfn1oqnR5nDQ_v8jYaybCii2ccsOokmMo0uEMEHusicH8j3Ephz6xla5Veu_I9-cHHCcII4hMpw3s940MEpeKVxxla8Vda4V-8QOeejkrhy1_yVaLnikF-2x2yVqd57zvItOuElk3yXO7E48KBvN5O_BY-Ge7YlAVVoiVy6Q3epK9ABnrJ-acdaqcAqBljukNNhYUR335aOV8X5Kw_mVQePPNVo4n2OC9ZJ2Uh54CqgJsGPNW9VZtyuQIDVaTHdiNHigEuAyaM2bVePRooxLo4IwnycVbvlrFxr7qfHE8NUn1vNCOpHggPfrTUZxPn5X1FhmK80gCpNerpkgSHzZ7ACQbjvFECDtuoCClSTRTop1QJRmme3YWatmyFWQ6bmeDDue7Sj2Sedp-3AKJgMvVFgArFrEL__xhd-tltTwU9UrdtPpT4-3nBWpf8dmuYx-GO8CYj5O-m7GY7jcWW7v0osN2l3OjbRyE7tAvEWMGQ4j3v05jCBqKqE0PF83MNhnA_lT2GR6I_ZMVdctsBIilH8ES_HQ8n6aZeeAv2lJ4aGS4as2IpCn9eeXK8vDTDWlleDv4o4Zo_im5JhXn_MsBjpXceyaUYZ5aZtEjGyzPbQm_JQzt-6e9S-lLXa1t-PyPQ-nXhfUxMkKBcUyFRKWwewBGzq6Qry_wrMqHKCR9ho7CpnhxcQnEVIQT6zrvpseo4apHOAumzUwBOR2dOW3iUMvsw9hLaJ7_3fRdMqnfskV-8Uro_pYt3knnNoNhq11I3iihBa1c3mN6x75kTu2OLM4wraGTtb3YvtCv_RleBdsQEnrwIsimTCALmvHziraYMfzHJ5YVKamyTxlFALQLeHTEgkoLQnpjY8Tp5igoFHjbwLoTjWy7jeMOmFOMU7WIP_KcN4jiyWbL0pO-8ZZ-Y3TXJC16Fh81Sl9Ya5p9N3t01fO76XLL9y86sNXLqNWluUN7YspJgb8gA2d6B2YRgmVOJnczWlQoGQl2GIS87zbEAwPQK5eXN50-L_N1j0kQPJY4XYE5VKKIBmNsNW7zzRAg0kgbS_K08zweWdgBCYFqORkuXd_5W2lFwI0hahbwW8dF1rEfoGR0sVcInRXym1xuApNBb4lhfYcNpzL3zm11PQRJn3gTCKz8EV-Bp9-PAPiez70S__5FlmKUWfqSpuRwEFfKs5jUU7lBUefcdzDvgP30yxVW9uVH4aUtPvAXCX25GpHJAFg2Uusxx27fhiABocCSoeRHn8Pnc-4jKF4e8tn7V7ymJilYS5fMBvpb9WoTQzNGsp61GpyOaAbnNPlQO42smRLg7w2aumLaEdohZW1GoV-VAJ7QILPMtu100wl0IGQ3KwSyEf3TjXcHUdWnKxQf4vMK3R64vQZ3iFckzfxwUFR5Qh8lLfMA0d0B3sDnmAQqi6G81nKsNIdFRZFwVOmtK-wIltl1haHzkgO8P6D1PMjPMCAWxZ41o4fKELDMcBuc0OeUE-EinvgsfV2YNYYhJBa2zX8bLe0y9J3Nu82vHcTW73SsJvSjKbWbAWVVBFcprwGin-c6fl2YuSfYMtzDnb0L81YeFFO7NO6XZYy3BqoEz7fXAvqAg5DBuKMzi5NeSNZ6yWMM8-60uGSQ8O--mPwFeYHc6GUYfXfrY23g1R72aiqJPxT1N4Ap7XrDUPhAZI4v21Y83E8vNjGwBMb4rZy6E-IJvT_N_iKzIdG9uUXGa3gBXggYuJFKvMUesmeomkcbm3kwzY6a9fJW-5T2x_-wNKDWxUMYmNhL-KMf3r-Kfiv1DcNcfcH3xr6mzF5L666o2f8Ba-rci4NDPsvDDXoYnKEq912FDlYeaA8BYDBLTgt1Zlw9K7_uvgVQ_Eu7ik6guhU8mWSxPLogpIypaBKZkoF1yjrsCHoOO_83SCpX2kCjfYcpc3LOrzY_6uxB5U1oX-EofboprlI0xMuBtVOCz4g6tU9sDsluvcRpPj2McS6IgjBD6p2zwOkheXeMljTamx7npHQXGBFTI0_1ixkUSH3gFCrZxDDT49xAXEIDlIqpzYL8uQj57FfRYc-YVkUtvVjFWmi3GFIaoAHX08a_OZ_DN1cCokB2410D3G4Cavi483feaR5xlk6Bon9ipzRmxTdXrwmZCuqdihWStbuuXrd4u_Qa7DxXSDf3jADMbSlxXgxCDJo9-CJbpPzxW1T_4fw6EXN4NbDPx5KweCFqEemeNduYQnnJjDuCFX4mD9qpo4b-r624WbXbsdu4YNOuGYkSu7kDwLUCWyiiBMKmJdOTLHMDW9Ct9I1hswQFMv7b9bI-LLMNdO-NRstOcMjQkQUFLJc_PjjhJJR2MRcWNSCwzHi0Ht1TKsnn9tqHnHp8ckpKzMKABYUJJLICweXzaWe2Mp0BxPQRtpssnPRuopSaHWiVn0781v_uMzor1eZ6kWAsfBVTLWjc_gu_EnhFSjh6kl5NLKisG2WQYmL7oe9p60lxBE2nKZygoS6MBUWiBngB15ULaU2gLHBsQEKiW9EUdZ2Dna5-II8f6y92fIr7pdKHHyfuu9Am-_7G8JCxFyOHbOn6YMgOSkgD_3AK0yz84IPzPoVXbmy0i-FLRuziS5qyZhoq2qyTL6EgCjMOQWjbafppZBIVeui8Tzm-EoUZQrFPGFBofsBDbhAMhpu9EwNf9abvVx999y-5Tvl6bByp1fLoJHajcZGEelNutBVEJB3BuuRoZana3i-GCzvo5WwVsT4nfVNf294dASKUsk0VhoAqnXSzi_xBW7bVL-lfwvQRC7XcZUc1qDQhCN0vN0gBrlCSe0A2RxKu1NZ-grbhcRpQjxQQlnDI0wot4AAt4dBiNp5qvyHiuQJ9cpzLDWJE9BjF5POSufoBlaTCtCj4-XubHqVnQ65Vm-UAjYuVKlx6Kp7eI1bqokjAnDJH7dJsK07RsXlV-ARuS5hvSBuD6sERiXLYczqFrCOwNQsUtjWDXshsU8Tg-OTrah86DhYFgs5MR1Un5v55f_MHwqhmoRMXAaBfUEYT1fQT9CZYK0foxTVX3d-A4F6JzUIZkD_dPPMhLZvRIkjqdDn0ggcBI4qpx6LWZot5emcTAqJdFWzq4Ci9fSy4dN2vMqtBy9JGQK9qsZD19xGgrZEnAfOXH6Sy4tIc49qfGLVByGZmrmkVz3c8g2Tqg8x69Nc0R2IKjj1ssassK_1pBKagKl8qwClvwa-uMAQeixqIna4ldC75Bru8a9ue1otzM0tzM8SjvnNPuTV8-p9uJUTViDPa8sdS4LfaH_QZBNk7DWYZDVB9x_Zcuq-3Fn6rk4H9rUgNA5bbYV-HcpJhv7H_laLb5xirMKiuUgJJiZdeKXkI5eelkB_FpnESdyyd_SwL_gYFQpTZFf4bMKdOO_drugBl2_BxWlp_BqXLdKhdgDg2-XINf2hzHIqe0hW_u62P_Fhv_m0=)
-
+  ![umls-FeedRefreshTaskGiver](https://raw.githubusercontent.com/petercai/Vision/refs/heads/master/uml/umls-FeedRefreshTaskGiver.svg)
   <div align="center">
 
   <sub><em>Optimized for viewing with <a href="https://github.com/petercai/vscode-umlmark" target="_blank">vscode-umlmark</a></em></sub>
@@ -150,6 +97,7 @@ uv pip install -e .
   </div>
 
   - PlantUML Source
+
     ```
     @startuml umls-FeedRefreshTaskGiver
     legend top center
@@ -182,66 +130,113 @@ uv pip install -e .
     @enduml
     ```
 
----
 
-## 🔗 Ecosystem (UMLMark Suite)
+## Install
 
-This project is part of a growing ecosystem:
+Install the UML Gen CLI:
 
-| Tool                            | Description                            |
-| ------------------------------- | -------------------------------------- |
-| **UML Gen (CLI)**               | Code → UML generator (this repo) [(examples)](https://github.com/petercai/Vision)      |
-| **UMLMark (VSCode Extension)** |[ Visualize & navigate UML/code interactively](https://github.com/petercai/vscode-umlmark) |
-| **UMLMark (Eclipse Plugin)**    | [Generate UML directly inside Eclipse](https://github.com/petercai/UMLMark-release)   |
+```bash
+pip install uml-gen
+```
 
-👉 Together, they provide a full **code ↔ architecture workflow**
+Or:
 
----
-## 🛠️ Roadmap
+```bash
+pipx install uml-gen
+```
 
-* [ ] Advanced sequence analysis
-* [ ] Large project optimization
-* [ ] CI/CD integration
-* [ ] Team collaboration features
+Install from source:
 
----
-## ⭐ Support the Project
+```bash
+git clone https://github.com/petercai/uml-gen-java.git
+cd uml-gen-java
+uv pip install -e .
+```
 
-If this project helps you:
+## Quick Start
 
-* ⭐ Star the repo
-* 🔁 Share it
-* 💼 [Buy Me a Coffee](https://paypal.me/petercaica)
+1. Prepare a generation instruction in YAML.
+2. Generate a class diagram with `umlc-gen --config instruction.yaml`.
+3. Generate a sequence diagram with `umls-gen --config instruction.yaml`.
+5. Open generated `.puml` files in [UMLMark](https://github.com/petercai/vscode-umlmark) for preview and source navigation.
 
----
+## Developer Flow (UMLMark Suite)
 
-# ⚖️ License (Dual License Model)
+Recommended end-to-end workflow for Design as Code / Architecture as Code:
 
-This project uses a **dual-license model**.
+1. Write or update source code.
+2. Generate PlantUML diagrams from source using UML Gen (CLI).
+3. Open generated `.puml` diagrams in [UMLMark](https://github.com/petercai/vscode-umlmark) preview.
+4. Navigate from diagram elements back to source files.
+5. Iterate: update source, regenerate diagrams, and re-verify in preview.
 
-- 🟢 Free for Non-Commercial Use
+Flow summary:
 
-  You can use this project **for free** if:
+`source code -> uml-gen generation -> .puml preview in UMLMark -> code navigation back -> iterate`
 
-  * Personal projects
-  * Learning / education
-  * Open-source development
+## Configuration Highlights
 
-  See: `LICENSE.txt`
+- Generate class diagram:
+  ```bash
+    # fine-grained diagram generation control
+    umlc_gen.py --config <your-generation-instruction>.yaml 
 
-- 🔴 Commercial Use Requires License
-  A **paid license is required** if you:
+    # quick generation
+    umlc_gen.py --input src/main/java/com/example/MyService.java
+    # or when the class name is unique
+    umlc_gen.py --input MyService
+  ```  
+  <div align="right">
 
-  * Use in a company or organization
-  * Use in production systems
-  * Provide it as part of a SaaS
-  * Integrate into a paid product
+  <sub><em>refer to <a href="https://github.com/petercai/Vision/blob/master/uml/umlc-CategoryController.yaml" target="_blank">instruction example</a></em></sub>
 
-  See: `COMMERCIAL_LICENSE.txt`
+  </div>
 
+- Generate sequence diagram:
+  ```bash
+  umls_gen.py --config <your-generation-instruction>.yaml
+  ```
+  <div align="right">
 
----
+  <sub><em>refer to <a href="https://github.com/petercai/Vision/blob/master/uml/umls-FeedRefreshTaskGiver.yaml" target="_blank">instruction example</a></em></sub>
 
-<p align="center">
-  <b>© 2025 Peppermint</b>
-</p>
+  </div>
+- Use `--config` with `umlc-gen` and `umls-gen` for repeatable generation.
+- Keep generation rules in repository-scoped YAML files for team consistency.
+- Store outputs under versioned folders such as `uml/plantuml/` when reviewing changes in pull requests.
+
+## Ecosystem: UMLMark Suite
+
+Together, these tools support a full code-to-architecture workflow:
+
+| Tool | Role |
+| --- | --- |
+| [UML Gen (CLI)](https://github.com/petercai/uml-gen-java) | Generate class and sequence diagrams from source code |
+| [UMLMark (VS Code Extension)](https://github.com/petercai/vscode-umlmark) | Interactive PlantUML preview, code navigation, export |
+| [UMLMark (Eclipse Plugin)](https://github.com/petercai/UMLMark-release) | UML generation and usage inside Eclipse |
+
+## License
+
+This project follows a dual-license model across the UMLMark Suite.
+
+- Free for Non-Commercial Use: [LICENSE.txt](LICENSE.txt)
+- Commercial Use Requires License: [COMMERCIAL_LICENSE.txt](COMMERCIAL_LICENSE.txt)
+
+If you need commercial usage guidance for your deployment scenario, contact the maintainer.
+
+## Support
+
+If UML Gen helps your team, support the project here:
+
+- Support me: <https://paypal.me/petercaica>
+
+## For Contributors
+
+Run local checks and packaging commands before opening pull requests:
+
+```bash
+uv pip install -e .
+python -m build
+```
+
+Track issues and feature requests in the GitHub issue tracker: <https://github.com/petercai/uml-gen-java/issues>.
